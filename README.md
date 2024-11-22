@@ -2,7 +2,7 @@
 
 Group Name: DBLegends
 
-Group members:
+Group members:\
 Lu Li \
 Bhavya Jain \
 Apoorva Adimulam \
