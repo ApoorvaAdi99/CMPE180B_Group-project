@@ -4,7 +4,7 @@ Group Name: DBLegends
 
 Group members:
 Lu Li \
-Bhavya Jain \ 
+Bhavya Jain \
 Apoorva Adimulam \
 Nivedita Nair 
 
