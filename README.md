@@ -1,6 +1,6 @@
 # CMPE180B_Group-project
 
-Group: DBLegends
+Group Name: DBLegends
 
 Group members:
 Lu Li 
