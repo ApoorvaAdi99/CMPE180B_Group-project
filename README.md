@@ -6,7 +6,8 @@ Group members:\
 Lu Li \
 Bhavya Jain \
 Apoorva Adimulam \
-Nivedita Nair 
+Nivedita Nair
+2 
 
 # Introduction
 This project is an information management system built using machine learning with Flask UI, LLM image recognition, and NoSQL (MongoDB) databases. The system processes images to identify products, manages inventory data, and provides CRUD operations for inventory management.
