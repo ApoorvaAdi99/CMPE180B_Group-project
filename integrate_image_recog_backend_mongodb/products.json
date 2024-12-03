@@ -1,0 +1,66 @@
+[
+    {
+        "HashID": "c3cb00ddd2eda88f08835a73098aa79b0de7423e311a76fba249bac41bd249b9",
+        "Product": "Nut",
+        "Brand": "Castania",
+        "Quantity": 1,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "b6f7c7db775a41338c2ee02ac99cc4cfed68734c6535f9da40101eccdd3c7687",
+        "Product": "Milk",
+        "Brand": "Berchtesj\u00e4den",
+        "Quantity": 3,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "8a18500f472a5f9ea025b4ba7a5279893759bfd6d80d2d482792a05d7ae5bcb3",
+        "Product": "Tea",
+        "Brand": "Me&mer",
+        "Quantity": 3,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "351c0100f7b2099522144bdbb04c865f540228b0d20b17abc98fdc605d5667bc",
+        "Product": "Soda",
+        "Brand": "Pepsi",
+        "Quantity": 12,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "2e72daf7e9e4fde868c55349e9972bbf173ce7eaee93c6adfa7f8e099dbcef14",
+        "Product": "Laundry detergent",
+        "Brand": "Ariel",
+        "Quantity": 3,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "51630498c812c0844f90eda235c6725f8a46451fcbc298862683fa4c225a1cd8",
+        "Product": "Tea",
+        "Brand": "Red Label",
+        "Quantity": 5,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "6800e3aabdc747cf997387d5b5c96e21907aca0be4c07ba8a73ffd9e06a0d7cd",
+        "Product": "Oil",
+        "Brand": "Rg",
+        "Quantity": 5,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    },
+    {
+        "HashID": "2465b5738a2140e10b5aa023c061d2fab0bf1d7180f2909312a16d6430b80c59",
+        "Product": "Butter",
+        "Brand": "Nambu's",
+        "Quantity": 14,
+        "PurchaseTime": "2024-11-21",
+        "ExpirationTime": "2026-11-21"
+    }
+]
