@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Update Inventory</title>
+    <title>Update Product - Inventory Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Update Inventory</h1>
+    <h1>Update Product</h1>
     <form method="POST" action="/update">
+        <input type="hidden" name="hash_id" value="{{ product.HashID }}">
         <div class="mb-3">
             <label for="product" class="form-label">Product:</label>
-            <input type="text" class="form-control" id="product" name="product" required>
+            <input type="text" class="form-control" id="product" name="product" value="{{ product.Product }}" required>
         </div>
         <div class="mb-3">
             <label for="brand" class="form-label">Brand:</label>
-            <input type="text" class="form-control" id="brand" name="brand" required>
+            <input type="text" class="form-control" id="brand" name="brand" value="{{ product.Brand }}" required>
         </div>
         <div class="mb-3">
             <label for="quantity" class="form-label">Quantity:</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" required>
+            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ product.Quantity }}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mb-3">
+            <label for="purchase_time" class="form-label">Purchase Time:</label>
+            <input type="date" class="form-control" id="purchase_time" name="purchase_time" value="{{ product.PurchaseTime }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="expiration_time" class="form-label">Expiration Time:</label>
+            <input type="date" class="form-control" id="expiration_time" name="expiration_time" value="{{ product.ExpirationTime }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Product</button>
     </form>
+    <a href="/inventory" class="btn btn-secondary mt-3">Back to Inventory</a>
 </div>
 </body>
 </html>

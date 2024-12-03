@@ -84,6 +84,25 @@ def insert_product(product, brand, quantity, purchase_time, expiration_time):
     print(f"Inserted product: {product_data}")
     return product_data
 
+def get_all_products():
+    return list(collection.find())
+
+def update_product(hash_id, product, brand, quantity, purchase_time, expiration_time):
+    collection.update_one(
+        {"HashID": hash_id},
+        {"$set": {
+            "Product": product,
+            "Brand": brand,
+            "Quantity": quantity,
+            "PurchaseTime": purchase_time,
+            "ExpirationTime": expiration_time,
+        }}
+    )
+
+def delete_product(hash_id):
+    collection.delete_one({"HashID": hash_id})
+
+
 # Route 1: Page to process images and update database
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -117,6 +136,37 @@ def index():
 
         return render_template("index.html", message="Images processed and database updated.", products=inserted_products)
     return render_template("index.html")
+
+
+# Route 2: View Inventory
+@app.route("/inventory")
+def view_inventory():
+    products = get_all_products()
+    return render_template("inventory.html", products=products)
+
+# Route 3: Update Inventory
+@app.route("/update", methods=["GET", "POST"])
+def update_inventory():
+    if request.method == "POST":
+        hash_id = request.form.get("hash_id")
+        product = request.form.get("product")
+        brand = request.form.get("brand")
+        quantity = int(request.form.get("quantity"))
+        purchase_time = request.form.get("purchase_time")
+        expiration_time = request.form.get("expiration_time")
+        
+        update_product(hash_id, product, brand, quantity, purchase_time, expiration_time)
+        return redirect(url_for("view_inventory"))
+    
+    hash_id = request.args.get("hash_id")
+    product = collection.find_one({"HashID": hash_id})
+    return render_template("update.html", product=product)
+
+# Route 4: Delete Product
+@app.route("/delete/<hash_id>")
+def delete_product_route(hash_id):
+    delete_product(hash_id)
+    return redirect(url_for("view_inventory"))
 
 if __name__ == "__main__":
     app.run(debug=True)

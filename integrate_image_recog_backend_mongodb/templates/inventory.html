@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>View Inventory</title>
+    <title>Inventory - Inventory Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Inventory Details</h1>
+    <h1>Inventory</h1>
     <table class="table">
         <thead>
             <tr>
@@ -15,20 +15,26 @@
                 <th>Quantity</th>
                 <th>Purchase Time</th>
                 <th>Expiration Time</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in items %}
+            {% for product in products %}
             <tr>
-                <td>{{ item.Product }}</td>
-                <td>{{ item.Brand }}</td>
-                <td>{{ item.Quantity }}</td>
-                <td>{{ item.PurchaseTime }}</td>
-                <td>{{ item.ExpirationTime }}</td>
+                <td>{{ product.Product }}</td>
+                <td>{{ product.Brand }}</td>
+                <td>{{ product.Quantity }}</td>
+                <td>{{ product.PurchaseTime }}</td>
+                <td>{{ product.ExpirationTime }}</td>
+                <td>
+                    <a href="/update?hash_id={{ product.HashID }}" class="btn btn-warning btn-sm">Update</a>
+                    <a href="/delete/{{ product.HashID }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="/" class="btn btn-primary">Back to Home</a>
 </div>
 </body>
 </html>
