@@ -67,18 +67,53 @@ def generate_hash_id(product, brand):
     unique_string = f"{product}{brand}"
     return hashlib.sha256(unique_string.encode()).hexdigest()
 
-def insert_product(product, brand, quantity, purchase_time, expiration_time):
+# def insert_product(product, brand, quantity, purchase_time, expiration_time):
+#     hash_id = generate_hash_id(product, brand)
+#     product_data = {
+#         "HashID": hash_id,
+#         "Product": product,
+#         "Brand": brand,
+#         "Quantity": quantity,
+#         "PurchaseTime": purchase_time,
+#         "ExpirationTime": expiration_time,
+#     }
+#     collection.insert_one(product_data)
+#     print(f"Inserted product: {product_data}")
+
+def insert_update_product(product, brand, quantity, purchase_time, expiration_time):
     hash_id = generate_hash_id(product, brand)
-    product_data = {
-        "HashID": hash_id,
-        "Product": product,
-        "Brand": brand,
+    
+    # Create the new batch entry
+    new_batch = {
         "Quantity": quantity,
         "PurchaseTime": purchase_time,
         "ExpirationTime": expiration_time,
     }
-    collection.insert_one(product_data)
-    print(f"Inserted product: {product_data}")
+
+    # Check if the HashID already exists
+    existing_product = collection.find_one({"HashID": hash_id})
+    if existing_product:
+        # Add the new batch and update the total quantity
+        collection.update_one(
+            {"HashID": hash_id},
+            {
+                "$push": {"Batches": new_batch},
+                "$inc": {"Quantity": quantity}
+            }
+        )
+        print(f"Updated product: {product} | Added new batch: {new_batch} | Updated TotalQuantity: {existing_product['Quantity'] + quantity}")
+    else:
+        # Insert a new product record
+        product_data = {
+            "HashID": hash_id,
+            "Product": product,
+            "Brand": brand,
+            "Quantity": quantity,
+            "Batches": [new_batch],
+        }
+        collection.insert_one(product_data)
+        print(f"Inserted new product: {product_data}")
+
 
 # Main Function
 def main():
@@ -97,7 +132,7 @@ def main():
         purchase_time = datetime.now().strftime("%Y-%m-%d")
         expiration_time = (datetime.now() + timedelta(days=730)).strftime("%Y-%m-%d")
         
-        insert_product(product, brand, quantity, purchase_time, expiration_time)
+        insert_update_product(product, brand, quantity, purchase_time, expiration_time)
 
     end_time = time()
     execution_time = end_time - start_time
