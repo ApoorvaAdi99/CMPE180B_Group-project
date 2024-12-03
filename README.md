@@ -9,4 +9,4 @@ Apoorva Adimulam \
 Nivedita Nair 
 
 # Introduction
-An information management system built using machine learning for image recognition, NoSQL databases, and cloud services.
+An information management system built using machine learning for Django UI, LLM image recognition, and NoSQL (MongoDB) databases
