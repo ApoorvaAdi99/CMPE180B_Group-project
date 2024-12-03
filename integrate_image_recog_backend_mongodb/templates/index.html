@@ -21,22 +21,30 @@
         <a href="/inventory" class="btn btn-secondary">View Inventory</a>
     </div>
     
-    {% if results %}
-        <h2 class="mt-5">Processed Results</h2>
+    {% if message %}
+        <p class="mt-4">{{ message }}</p>
+    {% endif %}
+    
+    {% if products %}
+        <h2 class="mt-5">Inserted Products</h2>
         <table class="table">
             <thead>
                 <tr>
                     <th>Product</th>
                     <th>Brand</th>
                     <th>Quantity</th>
+                    <th>Purchase Time</th>
+                    <th>Expiration Time</th>
                 </tr>
             </thead>
             <tbody>
-                {% for result in results %}
+                {% for product in products %}
                 <tr>
-                    <td>{{ result.Product }}</td>
-                    <td>{{ result.Brand }}</td>
-                    <td>{{ result.Quantity }}</td>
+                    <td>{{ product.Product }}</td>
+                    <td>{{ product.Brand }}</td>
+                    <td>{{ product.Quantity }}</td>
+                    <td>{{ product.PurchaseTime }}</td>
+                    <td>{{ product.ExpirationTime }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
