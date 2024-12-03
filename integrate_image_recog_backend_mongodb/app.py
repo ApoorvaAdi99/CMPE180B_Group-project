@@ -5,7 +5,7 @@ from pymongo import MongoClient
 import hashlib
 from datetime import datetime, timedelta
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__)
 
@@ -71,33 +71,115 @@ def generate_hash_id(product, brand):
     return hashlib.sha256(unique_string.encode()).hexdigest()
 
 def insert_product(product, brand, quantity, purchase_time, expiration_time):
+    # # hash_id = generate_hash_id(product, brand)
+    # product_data = {
+    #     "HashID": hash_id,
+    #     "Product": product,
+    #     "Brand": brand,
+    #     "Quantity": quantity,
+    #     "PurchaseTime": purchase_time,
+    #     "ExpirationTime": expiration_time,
+    # }
+    # collection.insert_one(product_data)
+    # print(f"Inserted product: {product_data}")
+    # return product_data
     hash_id = generate_hash_id(product, brand)
-    product_data = {
-        "HashID": hash_id,
-        "Product": product,
-        "Brand": brand,
+    
+    # Create the new batch entry
+    new_batch = {
         "Quantity": quantity,
         "PurchaseTime": purchase_time,
         "ExpirationTime": expiration_time,
     }
-    collection.insert_one(product_data)
-    print(f"Inserted product: {product_data}")
-    return product_data
+
+    # Check if the HashID already exists
+    existing_product = collection.find_one({"HashID": hash_id})
+    if existing_product:
+        # Add the new batch and update the total quantity
+        collection.update_one(
+            {"HashID": hash_id},
+            {
+                "$push": {"Batches": new_batch},
+                "$inc": {"Quantity": quantity}
+            }
+        )
+        print(f"Updated product: {product} | Added new batch: {new_batch} | Updated TotalQuantity: {existing_product['Quantity'] + quantity}")
+    else:
+        # Insert a new product record
+        product_data = {
+            "HashID": hash_id,
+            "Product": product,
+            "Brand": brand,
+            "Quantity": quantity,
+            "Batches": [new_batch],
+        }
+        collection.insert_one(product_data)
+        print(f"Inserted new product: {product_data}")
+
 
 def get_all_products():
     return list(collection.find())
 
 def update_product(hash_id, product, brand, quantity, purchase_time, expiration_time):
-    collection.update_one(
-        {"HashID": hash_id},
-        {"$set": {
+    # #  print(f"Updating product with HashID: {hash_id}")
+    # print(f"New values - Product: {product}, Brand: {brand}, Quantity: {quantity}, PurchaseTime: {purchase_time}, ExpirationTime: {expiration_time}")
+    
+    # # Print the type of hash_id to ensure it matches the type in the database
+    # print(f"Type of hash_id: {type(hash_id)}")
+    
+    # # Check if the document with the given HashID exists
+    # existing_product = collection.find_one({"HashID": hash_id})
+    # if existing_product:
+    #     print(f"Found product: {existing_product}")
+    # else:
+    #     print(f"No product found with HashID: {hash_id}")
+    
+    # result = collection.update_one(
+    #     {"HashID": hash_id},
+    #     {"$set": {
+    #         "Product": product,
+    #         "Brand": brand,
+    #         "Quantity": quantity,
+    #         "PurchaseTime": purchase_time,
+    #         "ExpirationTime": expiration_time,
+    #     }}
+    # )
+    
+    # print(f"Matched count: {result.matched_count}, Modified count: {result.modified_count}")
+    hash_id = generate_hash_id(product, brand)
+    
+    # Create the new batch entry
+    new_batch = {
+        "Quantity": quantity,
+        "PurchaseTime": purchase_time,
+        "ExpirationTime": expiration_time,
+    }
+
+    # Check if the HashID already exists
+    existing_product = collection.find_one({"HashID": hash_id})
+    if existing_product:
+        # Add the new batch and update the total quantity
+        collection.update_one(
+            {"HashID": hash_id},
+            {
+                "$push": {"Batches": new_batch},
+                "$inc": {"Quantity": quantity}
+            }
+        )
+        print(f"Updated product: {product} | Added new batch: {new_batch} | Updated TotalQuantity: {existing_product['Quantity'] + quantity}")
+    else:
+        # Insert a new product record
+        product_data = {
+            "HashID": hash_id,
             "Product": product,
             "Brand": brand,
             "Quantity": quantity,
-            "PurchaseTime": purchase_time,
-            "ExpirationTime": expiration_time,
-        }}
-    )
+            "Batches": [new_batch],
+        }
+        collection.insert_one(product_data)
+        print(f"Inserted new product: {product_data}")
+
+
 
 def delete_product(hash_id):
     collection.delete_one({"HashID": hash_id})
