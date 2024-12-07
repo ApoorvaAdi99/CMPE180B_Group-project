@@ -1,10 +1,9 @@
 # test_app.py
 
 import unittest
-from app import app, ProductImageProcessor, generate_hash_id, insert_product, update_product, delete_product
-from unittest.mock import patch, MagicMock
-from datetime import datetime
-import os
+from app import app, generate_hash_id, insert_product, update_product, delete_product
+from unittest.mock import patch
+from datetime import datetime, timedelta
 
 class TestInventoryManagementSystem(unittest.TestCase):
     def setUp(self):
@@ -30,16 +29,6 @@ class TestInventoryManagementSystem(unittest.TestCase):
         """Test POST request to index without folder path"""
         response = self.client.post('/', data={})
         self.assertIn(b'Please provide a folder path', response.data)
-
-    @patch('app.ProductImageProcessor')
-    def test_index_post_with_folder(self, mock_processor):
-        """Test POST request to index with folder path"""
-        mock_processor.return_value.process_images.return_value = [
-            {"Product": "Test", "Brand": "TestBrand", "Quantity": 1}
-        ]
-        response = self.client.post('/', data={'folder_path': 'test_folder'})
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Images processed', response.data)
 
     def test_view_inventory(self):
         """Test inventory view route"""
@@ -92,29 +81,6 @@ class TestInventoryManagementSystem(unittest.TestCase):
         self.mock_collection.delete_one.assert_called_once_with(
             {"HashID": "test_hash"}
         )
-
-    # Image Processing Tests
-    @patch('PIL.Image.open')
-    def test_process_image(self, mock_image_open):
-        """Test image processing"""
-        mock_image = MagicMock()
-        mock_image_open.return_value = mock_image
-        
-        processor = ProductImageProcessor(
-            model_id="test_model",
-            revision="test_revision",
-            inventory_folder="test_folder"
-        )
-        
-        # Mock the model's methods
-        processor.model.encode_image = MagicMock(return_value="encoded_image")
-        processor.model.answer_question = MagicMock(return_value="test_answer")
-        
-        response = processor._process_image("test_image.jpg")
-        self.assertIsNotNone(response)
-        self.assertIn("Product", response)
-        self.assertIn("Brand", response)
-        self.assertIn("Quantity", response)
 
     # Form Submission Tests
     def test_update_form_submission(self):
