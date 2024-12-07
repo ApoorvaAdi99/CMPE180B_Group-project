@@ -26,7 +26,7 @@ class TestProductImageProcessor(unittest.TestCase):
         cls.db = cls.client[cls.database_name]
         cls.collection = cls.db["products"]
 
-        cls.image_path = "/home/lu/greenpear/CMPE180B_Group-project/tests/test_image"
+        cls.image_path = os.path.join(os.path.dirname(__file__), "test_image")
 
         # Ensure the test image exists in the temporary directory
         assert os.path.exists(cls.image_path), f"Test image not found at: {cls.image_path}"
@@ -67,49 +67,6 @@ class TestProductImageProcessor(unittest.TestCase):
         self.assertTrue(responses)
         self.assertEqual(len(responses), 1)  # Only one image is processed
         self.assertEqual(responses[0], mock_process_image.return_value)
-
-    # def test_insert_update_product_insert(self):
-    #     product = "NewProduct"
-    #     brand = "NewBrand"
-    #     quantity = 20
-    #     purchase_time = datetime.now().strftime("%Y-%m-%d")
-    #     expiration_time = (datetime.now() + timedelta(days=730)).strftime("%Y-%m-%d")
-
-    # # Debugging: Clear database and insert data
-    #     self.collection.delete_many({})
-    #     print("Collection cleared.")
-
-    #     insert_update_product(product, brand, quantity, purchase_time, expiration_time)
-
-    # # Verify product is inserted
-    #     hash_id = generate_hash_id(product, brand)
-    #     inserted_product = self.collection.find_one({"HashID": hash_id})
-    #     print(f"Inserted product: {inserted_product}")  # Debugging
-    #     self.assertIsNotNone(inserted_product, f"Product with HashID {hash_id} was not inserted.")
-    #     self.assertEqual(inserted_product["Product"], product)
-    #     self.assertEqual(inserted_product["Brand"], brand)
-    #     self.assertEqual(inserted_product["Quantity"], quantity)
-
-
-    # def test_insert_update_product_update(self):
-    #     product = "ExistingProduct"
-    #     brand = "ExistingBrand"
-    #     quantity = 10
-    #     purchase_time = datetime.now().strftime("%Y-%m-%d")
-    #     expiration_time = (datetime.now() + timedelta(days=730)).strftime("%Y-%m-%d")
-
-    #     insert_update_product(product, brand, quantity, purchase_time, expiration_time)
-
-    #     # Update the same product
-    #     new_quantity = 15
-    #     insert_update_product(product, brand, new_quantity, purchase_time, expiration_time)
-
-    #     # Check if product quantity is updated
-    #     hash_id = generate_hash_id(product, brand)
-    #     updated_product = self.collection.find_one({"HashID": hash_id})
-    #     self.assertIsNotNone(updated_product, f"Product with HashID {hash_id} was not found after update.")
-    #     self.assertEqual(updated_product["Quantity"], quantity + new_quantity)
-    #     self.assertEqual(len(updated_product["Batches"]), 2)
 
 if __name__ == "__main__":
     unittest.main()
