@@ -18,7 +18,7 @@ The Inventory Management System leverages machine learning, Flask for the user i
 
 ## Project Structure
 
-### **Directory**: `integrate_image_recog_backend_mongodb`
+### **Application Working Directory**: `integrate_image_recog_backend_mongodb`
 
 ### **Files:**
 
