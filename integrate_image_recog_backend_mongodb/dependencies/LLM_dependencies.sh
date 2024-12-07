@@ -8,6 +8,3 @@ pip install torch torchvision torchaudio
 
 # install required dependencies einops
 pip install einops
-
-#install flask
-pip install flask
