@@ -1,7 +1,7 @@
 # test_app.py
 
 import unittest
-from app import app, generate_hash_id, insert_product, update_product, delete_product
+from integrate_image_recog_backend_mongodb.app import app, generate_hash_id, insert_product, update_product, delete_product
 from unittest.mock import patch
 from datetime import datetime, timedelta
 
